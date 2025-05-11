@@ -50,7 +50,7 @@ export function getGoogleSearchResultsWithH3(
     return current;
   };
   // magic numbers depending on actual DOM structure
-  const levels = tabType === 'all' ? 9 : 2;
+  const levels = tabType === 'all' ? 7 : 2;
   return [...new Set(h3Elements.map((h3) => getAncestor(h3, levels)))];
 }
 
@@ -90,6 +90,9 @@ export function getGoogleSearchTabType(
   const tbm = searchParams.get('tbm');
   // Not supporting maps.google. or /maps because there is nothing much to navigate there
   if (udm === null && tbm === null) {
+    if (location.pathname === '/search') {
+      return 'all';
+    }
     return null;
   }
   switch (tbm) {
